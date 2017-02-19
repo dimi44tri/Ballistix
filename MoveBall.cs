@@ -4,7 +4,7 @@ using System.Collections;
 public class MoveBall : MonoBehaviour
 {
     //adjust speed range of ball impulse force
-    public float augment;
+    public float augmentTrajectory;
 
     private Vector3 initialImpulse;
     private int pulsePoint;
@@ -21,22 +21,22 @@ public class MoveBall : MonoBehaviour
         {
             case 0:
                 //shoot from NE cannon w/random angling
-                initialImpulse = new Vector3 ((Random.Range(-10, -15)) * augment, 0f, (Random.Range(-10, -15)) * augment);
+                initialImpulse = new Vector3 ((Random.Range(-10, -15)) * augmentTrajectory, 0f, (Random.Range(-10, -15)) * augmentTrajectory);
                 break;
 
             case 1:
                 //shoot from NW cannon w/random angling
-                initialImpulse = new Vector3 ((Random.Range(10, 15)) * augment, 0f, (Random.Range(-10, -15)) * augment);
+                initialImpulse = new Vector3 ((Random.Range(10, 15)) * augmentTrajectory, 0f, (Random.Range(-10, -15)) * augmentTrajectory);
                 break;
 
             case 2:
                 //shoot from SW cannon w/random angling
-                initialImpulse = new Vector3 ((Random.Range(10, 15)) * augment, 0f, (Random.Range(10, 15)) * augment);
+                initialImpulse = new Vector3 ((Random.Range(10, 15)) * augmentTrajectory, 0f, (Random.Range(10, 15)) * augmentTrajectory);
                 break;
 
             default:
                 //shoot from SE cannon w/random angling
-                initialImpulse = new Vector3 ((Random.Range(-10, -15)) * augment, 0f, (Random.Range(10, 15)) * augment);
+                initialImpulse = new Vector3 ((Random.Range(-10, -15)) * augmentTrajectory, 0f, (Random.Range(10, 15)) * augmentTrajectory);
                 break;
         }
 
