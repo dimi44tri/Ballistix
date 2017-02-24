@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 
@@ -18,8 +19,10 @@ public class Boundary
 
 public class PlayerController : MonoBehaviour {
 
+    public int playerID;
     public float fireRate;
     public float speed;
+    public Text life;
     public GameObject force;
     public Transform forceSpawn;    
     public ePlayer Player;
@@ -27,7 +30,7 @@ public class PlayerController : MonoBehaviour {
     private float nextFire1;
     private float nextFire2;
     private float nextFire3;
-    private float nextFire4;
+    private float nextFire4;   
   
 
     void Update()
@@ -72,6 +75,9 @@ public class PlayerController : MonoBehaviour {
                 }
                 break;
         }
+
+        //if player loses all life points, they are removed
+        DeadOrAlive();
     }
 
     void FixedUpdate()
@@ -107,5 +113,12 @@ public class PlayerController : MonoBehaviour {
                 break;
         }
     }
-}
 
+    void DeadOrAlive()
+    {        
+        if (life.text == "Player " + playerID.ToString() + ": 0")
+        {
+            Destroy(gameObject);
+        }
+    }
+}

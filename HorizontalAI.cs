@@ -1,16 +1,18 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 
 public class HorizontalAI : MonoBehaviour
-{    
+{
+    public int cpuID;
     public float distance;
     public float smoothing; //<-- how quickly AI moves into the dodge
+    public Text life;
     public Vector2 startWait;
     public Vector2 repellingTime;
-    public Vector2 repellingWait;
+    public Vector2 repellingWait;    
 
-    
     private float repelSpot; //<-- potential spot for AI to move to repel balls
     private Rigidbody rb;
 
@@ -40,10 +42,18 @@ public class HorizontalAI : MonoBehaviour
         }
     }
 
+    void Update()
+    {
+        if (life.text == "CPU " + cpuID.ToString() + ": 0")
+        {
+            Destroy(gameObject);
+        }
+    }
+
     void FixedUpdate()
     {
         //velocity in x direction, distance to travel, time * momentum modifier
         float newRepel = Mathf.MoveTowards(rb.velocity.x, repelSpot, Time.deltaTime * smoothing);
-        rb.velocity = new Vector3(newRepel, 0.0f, 0.0f);        
+        rb.velocity = new Vector3(newRepel, 0, 0);        
     }
 }

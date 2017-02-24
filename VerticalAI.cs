@@ -1,17 +1,18 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 
 public class VerticalAI : MonoBehaviour
 {
-    
+    public int cpuID;
     public float distance;
     public float smoothing; //<-- how quickly AI moves into the dodge
+    public Text life;
     public Vector2 startWait;
     public Vector2 repellingTime;
-    public Vector2 repellingWait;
+    public Vector2 repellingWait;    
 
-    private float nextFire;
     private float repelSpot; //<-- potential spot for AI to move to repel balls
     private Rigidbody rb;
 
@@ -41,9 +42,17 @@ public class VerticalAI : MonoBehaviour
         }
     }
 
+    void Update()
+    {
+        if (life.text == "CPU " + cpuID.ToString() + ": 0")
+        {
+            Destroy(gameObject);
+        }
+    }
+
     void FixedUpdate()
     {
         float newRepel = Mathf.MoveTowards (rb.velocity.z, repelSpot, Time.deltaTime * smoothing);
-        rb.velocity = new Vector3 (0.0f, 0.0f, newRepel);
+        rb.velocity = new Vector3 (0, 0, newRepel);
     }
 }

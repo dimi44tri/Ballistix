@@ -67,22 +67,22 @@ public class GameController : MonoBehaviour
                 {
                     case 0:
                         //shoot from NE cannon
-                        spawnPosition = new Vector3 (12f, 6f, 12f);                                            
+                        spawnPosition = new Vector3 (12, 6, 12);                                            
                         break;
 
                     case 1:
                         //shoot from NW cannon
-                        spawnPosition = new Vector3 (-12f, 6f, 12f);
+                        spawnPosition = new Vector3 (-12, 6, 12);
                         break;
 
                     case 2:
                         //shoot from SW cannon
-                        spawnPosition = new Vector3 (-12f, 6f, -12f);
+                        spawnPosition = new Vector3 (-12, 6, -12);
                         break;
 
                     default:
                         //shoot from SE cannon
-                        spawnPosition = new Vector3 (12f, 6f, -12f);
+                        spawnPosition = new Vector3 (12, 6, -12);
                         break;
                 }
                 Quaternion spawnRotation = Quaternion.identity; //identity means no rotation is applied
