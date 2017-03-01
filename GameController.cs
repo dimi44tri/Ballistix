@@ -1,56 +1,57 @@
 ﻿//Handles the logic behind spawning hazards
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
-
     public GameObject hazards;
-    
+    public GameObject player1;
+    public GameObject player2;
+    public GameObject player3;
+    public GameObject player4;
+    public Transform canvas;
+    public bool gameOver;
+    public bool restart;
     public int hazardCount;
     public float startWait;
     public float spawnWait;    
-    public float waveWait;    
-
-    //public GUIText scoreText;
-    //public GUIText restartText;
-    //public GUIText gameOverText;
-
-    //private int score;
-    //private bool gameOver;
-    //private bool restart;
-
+    public float waveWait;
+    public Text restartText;
+    public Text gameOverText;
     private Vector3 spawnPosition;
-
-
+    private int nRails = 0;
 
     // Use this for initialization
     void Start()
     {
-        /*gameOver = restart = false;
+        gameOver = restart = false;
         restartText.text = "";
-        gameOverText.text = "";
-        score = 0;
-        UpdateScore();*/
+        gameOverText.text = "";        
 
         //sets randomized spawn points for balls
         StartCoroutine(SpawnWaves());
     }
 
-    //void Update()
-    //{
-    //    //check for R input and restart current (or a specified) scene
-    //    if (restart)
-    //    {
-    //        if (Input.GetKeyDown(KeyCode.R))
-    //        {
-    //            SceneManager.LoadScene("Main", LoadSceneMode.Single);
-    //            /* 'UnityEngine.SceneManagement.SceneManager.LoadScene(0);' <---this also works*/
-    //        }
-    //    }
+    void Update()
+    {
+        //toggle pause menu with escape key
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Pause();
+        }
+                
+        //when game over, check for R input and restart current (or a specified) scene
+        if (restart)
+        {
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                SceneManager.LoadScene("Base Level", LoadSceneMode.Single);
+            }
+        }
 
-    //}
+    }
 
     IEnumerator SpawnWaves() //Example of a Coroutine to suspend code exectuion so it only runs at intervals of the game
     {
@@ -91,29 +92,56 @@ public class GameController : MonoBehaviour
             }
             yield return new WaitForSeconds (waveWait); //delay time between waves
 
-            /*if (gameOver)
+            //give option for player to restart
+            if (gameOver)
             {
                 restartText.text = "Press 'R' to restart.";
                 restart = true;
                 break;
-            }*/
+            }
         }
     }
 
-    //public void AddScore(int newScoreValue)
-    //{
-    //    score += newScoreValue;
-    //    UpdateScore();
-    //}
+    public void GameOver()
+    {
+        gameOverText.text = "Game Over!";
+        gameOver = true;
+    }
 
-    //public void GameOver()
-    //{
-    //    gameOverText.text = "Game Over!";
-    //    gameOver = true;
-    //}
+    public void Pause()
+    {
+        if (canvas.gameObject.activeInHierarchy == false)
+        {
+            canvas.gameObject.SetActive(true);
+            Time.timeScale = 0; //<-- stops time in the game, other numbers control the flow of time
 
-    //void UpdateScore()
-    //{
-    //    scoreText.text = "Score: " + score; //score is automaticaly cast to string
-    //}
+            //pause all players' controls
+            player1.GetComponent<PlayerController>().enabled = false;
+            player2.GetComponent<PlayerController>().enabled = false;
+            player3.GetComponent<PlayerController>().enabled = false;
+            player4.GetComponent<PlayerController>().enabled = false;
+        }
+        else
+        {
+            canvas.gameObject.SetActive(false);
+            Time.timeScale = 1; //resume game
+
+            //resume all players' controls
+            player1.GetComponent<PlayerController>().enabled = true;
+            player2.GetComponent<PlayerController>().enabled = true;
+            player3.GetComponent<PlayerController>().enabled = true;
+            player4.GetComponent<PlayerController>().enabled = true;
+        }
+    }
+
+    public void RailCount(int newRailCount)
+    {
+        nRails += newRailCount;
+
+        //end the game if total of 3 Players/CPUs lost
+        if (nRails == 3)
+        {
+            GameOver();
+        }
+    }
 }
