@@ -8,15 +8,28 @@ public class DestroyLife : MonoBehaviour {
     public bool playerSpace;
     public bool cpuSpace;
     public Text life;
+    public int lifePoints;
     public int player;
     public int cpu;
     public GameObject rail;
     public Transform railSpace;
 
-    private int points = 5;
+    private GameController gameController;
 
     void Start()
     {
+        //allows each boundary to have access to GameOver function in GameController
+        GameObject gameControllerObject = GameObject.FindWithTag("GameController");
+
+        if (gameControllerObject != null)
+        {
+            gameController = gameControllerObject.GetComponent<GameController>();
+        }
+        else
+        {
+            Debug.Log("Cannot find 'GameController' script");
+        }
+
         //confirm if text is for a player or for a cpu
         LifeSpace();
     }
@@ -27,9 +40,9 @@ public class DestroyLife : MonoBehaviour {
         {
             //Destroy ball
             Destroy(other.gameObject);
-            points--;
-            //cap at 0 points
-            if (points < 0) { points = 0; }
+            lifePoints--;
+            //cap at 0 lifePoints
+            if (lifePoints < 0) { lifePoints = 0; }
 
             //update life points
             LifeSpace();
@@ -43,11 +56,11 @@ public class DestroyLife : MonoBehaviour {
     {
         if (playerSpace)
         {
-            life.text = "Player " + player.ToString() + ": " + points.ToString();
+            life.text = "Player " + player.ToString() + ": " + lifePoints.ToString();
         }
         else
         {
-            life.text = "CPU " + cpu.ToString() + ": " + points.ToString();
+            life.text = "CPU " + cpu.ToString() + ": " + lifePoints.ToString();
         }
     }
 
@@ -59,6 +72,7 @@ public class DestroyLife : MonoBehaviour {
             railSpace.position = new Vector3(.1f, 2.5f, -17);
             railSpace.rotation = Quaternion.identity;
             Instantiate(rail, railSpace.position, railSpace.rotation);
+            gameController.RailCount(1);
         }
 
         //spawn the north rail when player loses
@@ -67,6 +81,7 @@ public class DestroyLife : MonoBehaviour {
             railSpace.position = new Vector3(.1f, 2.5f, 17);
             railSpace.rotation = Quaternion.identity;
             Instantiate(rail, railSpace.position, railSpace.rotation);
+            gameController.RailCount(1);
         }
 
         //spawn the west rail when player loses
@@ -75,6 +90,7 @@ public class DestroyLife : MonoBehaviour {
             railSpace.position = new Vector3(-17, 2.5f, 0);
             railSpace.rotation = Quaternion.Euler(0, 90, 0);
             Instantiate(rail, railSpace.position, railSpace.rotation);
+            gameController.RailCount(1);
         }
 
         //spawn the east rail when player loses
@@ -83,7 +99,9 @@ public class DestroyLife : MonoBehaviour {
             railSpace.position = new Vector3(17, 2.5f, 0);
             railSpace.rotation = Quaternion.Euler(180, 90, 0);
             Instantiate(rail, railSpace.position, railSpace.rotation);
+            gameController.RailCount(1);
         }
 
     }
+    
 }
