@@ -26,13 +26,12 @@ public class PlayerController : MonoBehaviour {
     public GameObject force;
     public Transform forceSpawn;    
     public ePlayer Player;
-    
+
     private float nextFire1;
     private float nextFire2;
     private float nextFire3;
     private float nextFire4;   
   
-
     void Update()
     {
         //Link Force ability input button to corresponding player ID

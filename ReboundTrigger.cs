@@ -41,6 +41,7 @@ public class ReboundTrigger : MonoBehaviour {
             Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
             rbBall.AddForce(movement * speed);
         }
+
         //deflect ball at high speed in relation to Player 2/AI 1 location on world space
         if (other.gameObject.CompareTag("Force")
             && other.gameObject.transform.position.z > 0.0f
@@ -63,6 +64,7 @@ public class ReboundTrigger : MonoBehaviour {
             Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
             rbBall.AddForce(movement * speed);
         }
+
         //deflect ball at high speed in relation to Player 3 / AI 2 location on world space
         if (other.gameObject.CompareTag("Force") 
             && other.gameObject.transform.position.x < 0.0f 
