@@ -6,7 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
-    public GameObject hazards;
+    public GameObject balls;
+    public GameObject spinner;
     public GameObject player1;
     public GameObject player2;
     public GameObject player3;
@@ -15,12 +16,17 @@ public class GameController : MonoBehaviour
     public bool gameOver;
     public bool restart;
     public int hazardCount;
-    public float startWait;
+    public float startWait;    
     public float spawnWait;    
     public float waveWait;
     public Text restartText;
     public Text gameOverText;
+
+    private Spinner spin;
     private Vector3 spawnPosition;
+    private Vector3 spinnerPosition;
+    private float startSpinnerWait;
+    private float respawnSpinnerWait;
     private int nRails = 0;
 
     // Use this for initialization
@@ -28,10 +34,16 @@ public class GameController : MonoBehaviour
     {
         gameOver = restart = false;
         restartText.text = "";
-        gameOverText.text = "";        
+        gameOverText.text = "";
+
+        //randomize Spinner spawn time within game session
+        startSpinnerWait = Random.Range(10, 20);
+        spinnerPosition = new Vector3(0, 0, 0);
+
 
         //sets randomized spawn points for balls
         StartCoroutine(SpawnWaves());
+        StartCoroutine(SpawnSpinner());
     }
 
     void Update()
@@ -47,7 +59,8 @@ public class GameController : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.R))
             {
-                SceneManager.LoadScene("Base Level", LoadSceneMode.Single);
+                int sceneIndex = SceneManager.GetActiveScene().buildIndex;
+                SceneManager.LoadScene(sceneIndex, LoadSceneMode.Single);
             }
         }
 
@@ -87,10 +100,31 @@ public class GameController : MonoBehaviour
                         break;
                 }
                 Quaternion spawnRotation = Quaternion.identity; //identity means no rotation is applied
-                Instantiate (hazards, spawnPosition, spawnRotation);
+                Instantiate (balls, spawnPosition, spawnRotation);
                 yield return new WaitForSeconds (spawnWait); //delay spawn time via Coroutine           
             }
             yield return new WaitForSeconds (waveWait); //delay time between waves
+
+            //give option for player to restart
+            if (gameOver)
+            {
+                restartText.text = "Press 'R' to restart.";
+                restart = true;
+                break;
+            }
+        }
+    }
+
+    IEnumerator SpawnSpinner() //Example of a Coroutine to suspend code exectuion so it only runs at intervals of the game
+    {
+        yield return new WaitForSeconds(startSpinnerWait); //delay first wave by a few seconds
+
+        while (true)
+        {            
+            Quaternion spawnRotation = Quaternion.identity; //identity means no rotation is applied
+            Instantiate(spinner, spinnerPosition, spawnRotation);
+            respawnSpinnerWait = Random.Range(10 + spin.lifetime, 20 + spin.lifetime); //randomize Spinner respawn time within game session
+            yield return new WaitForSeconds(respawnSpinnerWait); //delay time between respawn
 
             //give option for player to restart
             if (gameOver)
