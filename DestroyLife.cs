@@ -84,7 +84,7 @@ public class DestroyLife : MonoBehaviour {
         {
             if (railCheck1 == false)
             {
-                railSpace.position = new Vector3(.1f, 2.5f, -17);
+                railSpace.position = new Vector3(14.5f, 2.5f, -17);
                 railSpace.rotation = Quaternion.identity;
                 Instantiate(rail, railSpace.position, railSpace.rotation);
                 gameController.RailCount(1);
@@ -99,7 +99,7 @@ public class DestroyLife : MonoBehaviour {
         {
             if (railCheck2 == false)
             {
-                railSpace.position = new Vector3(.1f, 2.5f, 17);
+                railSpace.position = new Vector3(14.5f, 2.5f, 17);
                 railSpace.rotation = Quaternion.identity;
                 Instantiate(rail, railSpace.position, railSpace.rotation);
                 gameController.RailCount(1);
@@ -114,7 +114,7 @@ public class DestroyLife : MonoBehaviour {
         {
             if (railCheck3 == false)
             {
-                railSpace.position = new Vector3(-17, 2.5f, 0);
+                railSpace.position = new Vector3(-17, 2.5f, -14.5f);
                 railSpace.rotation = Quaternion.Euler(0, 90, 0);
                 Instantiate(rail, railSpace.position, railSpace.rotation);
                 gameController.RailCount(1);
@@ -129,7 +129,7 @@ public class DestroyLife : MonoBehaviour {
         {
             if (railCheck4 == false)
             {
-                railSpace.position = new Vector3(17, 2.5f, 0);
+                railSpace.position = new Vector3(17, 2.5f, -14.5f);
                 railSpace.rotation = Quaternion.Euler(180, 90, 0);
                 Instantiate(rail, railSpace.position, railSpace.rotation);
                 gameController.RailCount(1);

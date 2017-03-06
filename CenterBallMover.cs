@@ -17,4 +17,9 @@ public class CenterBallMover : MonoBehaviour {
         //shoot ball forward respective of parent spawn oreitantaion
         rb.velocity = spawnOrientation.transform.forward * speed;
     }
+
+    void Update()
+    {
+        transform.Rotate(new Vector3(15, 30, 45) * Time.deltaTime * 3);
+    }
 }

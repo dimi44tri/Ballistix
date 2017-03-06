@@ -21,8 +21,8 @@ public class GameController : MonoBehaviour
     public float waveWait;
     public Text restartText;
     public Text gameOverText;
+    public Spinner spin;
 
-    private Spinner spin;
     private Vector3 spawnPosition;
     private Vector3 spinnerPosition;
     private float startSpinnerWait;
@@ -124,6 +124,7 @@ public class GameController : MonoBehaviour
             Quaternion spawnRotation = Quaternion.identity; //identity means no rotation is applied
             Instantiate(spinner, spinnerPosition, spawnRotation);
             respawnSpinnerWait = Random.Range(10 + spin.lifetime, 20 + spin.lifetime); //randomize Spinner respawn time within game session
+            //respawnSpinnerWait = Random.Range(25, 35);
             yield return new WaitForSeconds(respawnSpinnerWait); //delay time between respawn
 
             //give option for player to restart

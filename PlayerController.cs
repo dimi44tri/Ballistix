@@ -24,6 +24,7 @@ public class PlayerController : MonoBehaviour {
     public float speed;
     public Text life;
     public GameObject force;
+    public GameObject explosion;
     public Transform forceSpawn;    
     public ePlayer Player;
 
@@ -118,6 +119,7 @@ public class PlayerController : MonoBehaviour {
         if (life.text == "Player " + playerID.ToString() + ": 0")
         {
             Destroy(gameObject);
+            Instantiate(explosion, gameObject.transform.position, gameObject.transform.rotation);
         }
     }
 }
