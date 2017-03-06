@@ -8,6 +8,7 @@ public class HorizontalAI : MonoBehaviour
     public int cpuID;
     public float distance;
     public float smoothing; //<-- how quickly AI moves into the dodge
+    public GameObject explosion;
     public Text life;
     public Vector2 startWait;
     public Vector2 repellingTime;
@@ -47,6 +48,7 @@ public class HorizontalAI : MonoBehaviour
         if (life.text == "CPU " + cpuID.ToString() + ": 0")
         {
             Destroy(gameObject);
+            Instantiate(explosion, gameObject.transform.position, gameObject.transform.rotation);
         }
     }
 

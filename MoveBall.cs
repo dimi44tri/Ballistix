@@ -39,9 +39,13 @@ public class MoveBall : MonoBehaviour
                 initialImpulse = new Vector3 ((Random.Range(-10, -15)) * augmentTrajectory, 0f, (Random.Range(10, 15)) * augmentTrajectory);
                 break;
         }
-
         //shoot the ball as it spawns
         rb.AddForce(initialImpulse, ForceMode.Impulse);
+    }
+
+    void Update()
+    {
+        transform.Rotate(new Vector3(15, 30, 45) * Time.deltaTime * 3);
     }
 
     //Determines the correct ball force direction

@@ -1,18 +1,15 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 using System.Collections;
 
 
-public class VerticalAI : MonoBehaviour
+public class EnemyController : MonoBehaviour
 {
-    public int cpuID;
+
     public float distance;
     public float smoothing; //<-- how quickly AI moves into the dodge
-    public GameObject explosion;
-    public Text life;
-    public Vector2 startWait;
+    public Vector2 startWait;    
     public Vector2 repellingTime;
-    public Vector2 repellingWait;    
+    public Vector2 repellingWait;
 
     private float repelSpot; //<-- potential spot for AI to move to repel balls
     private Rigidbody rb;
@@ -25,7 +22,7 @@ public class VerticalAI : MonoBehaviour
     }
 
     //enumerator for coroutine
-    IEnumerator Repel()
+    IEnumerator Repel() 
     {
         //randomize wait time before inital movement
         yield return new WaitForSeconds (Random.Range (startWait.x, startWait.y));
@@ -34,7 +31,7 @@ public class VerticalAI : MonoBehaviour
         while (true)
         {
             //semi-randomize movement distance and direction tendencies towards center position
-            repelSpot = Random.Range (1, distance) * -Mathf.Sign (transform.position.z);
+            repelSpot = Random.Range(1, distance) * -Mathf.Sign(transform.position.y);
             yield return new WaitForSeconds (Random.Range (repellingTime.x, repellingTime.y));
 
             //stop and wait again for next movement
@@ -43,18 +40,9 @@ public class VerticalAI : MonoBehaviour
         }
     }
 
-    void Update()
-    {
-        if (life.text == "CPU " + cpuID.ToString() + ": 0")
-        {
-            Destroy(gameObject);
-            Instantiate(explosion, gameObject.transform.position, gameObject.transform.rotation);
-        }
-    }
-
     void FixedUpdate()
     {
-        float newRepel = Mathf.MoveTowards (rb.velocity.z, repelSpot, Time.deltaTime * smoothing);
-        rb.velocity = new Vector3 (0, 0, newRepel);
+        float newRepel = Mathf.MoveTowards (rb.velocity.y, repelSpot, Time.deltaTime * smoothing);
+        rb.velocity = new Vector3(0.0f, newRepel, 0.0f);
     }
 }
