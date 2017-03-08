@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿//Code repurposed for background movement instead of AI movement
+
+using UnityEngine;
 using System.Collections;
 
 

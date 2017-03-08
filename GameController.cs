@@ -21,6 +21,8 @@ public class GameController : MonoBehaviour
     public float waveWait;
     public Text restartText;
     public Text gameOverText;
+    public AudioSource pauseAudio;
+    public AudioSource resumeAudio;
     public Spinner spin;
 
     private Vector3 spawnPosition;
@@ -148,6 +150,7 @@ public class GameController : MonoBehaviour
         if (canvas.gameObject.activeInHierarchy == false)
         {
             canvas.gameObject.SetActive(true);
+            pauseAudio.Play();
             Time.timeScale = 0; //<-- stops time in the game, other numbers control the flow of time
 
             //pause all players' controls
@@ -159,6 +162,7 @@ public class GameController : MonoBehaviour
         else
         {
             canvas.gameObject.SetActive(false);
+            resumeAudio.Play();
             Time.timeScale = 1; //resume game
 
             //resume all players' controls
