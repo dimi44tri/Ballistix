@@ -6,9 +6,13 @@ public class ForceController : MonoBehaviour {
 
     public float lifetime;
     public Vector3 expansionRate;
-    
+
+    private AudioSource forceSfx;
+
     void Start()
-    {        
+    {
+        forceSfx = GetComponent<AudioSource>();
+        forceSfx.Play();
         Destroy(gameObject, lifetime);
     }
 

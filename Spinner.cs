@@ -14,8 +14,12 @@ public class Spinner : MonoBehaviour {
     public float spawnWait;
     public Vector3 rotationRate; //initial rotation value    
 
+    private AudioSource spinnerSfx;
+
     void Start()
     {
+        spinnerSfx = GetComponent<AudioSource>();
+        spinnerSfx.Play();
         Destroy(gameObject, lifetime);
         StartCoroutine(SpawnWaves());
     }

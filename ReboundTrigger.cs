@@ -10,15 +10,20 @@ public class ReboundTrigger : MonoBehaviour {
     private float moveVertical;
     private Rigidbody rbBall; //parent ball
     private Transform rbForce; //colliding force object
+    private AudioSource[] ReboundSfx;
 
     void Start()
     {        
         rbBall = GetComponentInParent<Rigidbody>();
+        ReboundSfx = GetComponents<AudioSource>();
     }
 
     //Reference the object we are colliding with and trigger force ability
     void OnTriggerEnter(Collider other)
     {
+        //SFX for corresponding Ball Contact
+        ContactAudio(other);
+
         //deflect ball at high speed in relation to Player 1/AI 4 location on world space
         if (other.gameObject.CompareTag("Force")
             && other.gameObject.transform.position.z < 0.0f
@@ -110,5 +115,13 @@ public class ReboundTrigger : MonoBehaviour {
             Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
             rbBall.AddForce(movement * speed);
         }
+    }
+
+    void ContactAudio(Collider other)
+    {
+        if (other.gameObject.CompareTag("Goal")) { ReboundSfx[0].Play(); }
+        if (other.gameObject.CompareTag("Force")) { ReboundSfx[1].Play(); }
+        if (other.gameObject.CompareTag("Corner") || other.gameObject.CompareTag("Wall")) { ReboundSfx[2].Play(); }
+
     }
 }
