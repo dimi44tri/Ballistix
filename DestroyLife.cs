@@ -8,16 +8,16 @@ public class DestroyLife : MonoBehaviour {
     public bool playerSpace;
     public bool cpuSpace;
     public Text life;
-    public float plifePoints = 10f;
-    public float clifePoints = 10f;
+    public float plifePoints;
+    public float clifePoints;
     public int player;
     public int cpu;
     public GameObject rail;
     public Transform railSpace;
 
     private GameController gameController;
-    private float customLivesP;
-    private float customLivesC;
+    public float customLivesP;
+    public float customLivesC;
     private bool railCheck1; 
     private bool railCheck2;
     private bool railCheck3;
